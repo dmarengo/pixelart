@@ -41,28 +41,65 @@ colorPersonalizado.addEventListener('change',
   (function() {
     // Se guarda el color de la rueda en colorActual
     colorActual = colorPersonalizado.value;
+    
     // Completar para que cambie el indicador-de-color al colorActual
     var colorido = document.getElementById('indicador-de-color');
     colorido.style.backgroundColor = colorActual;
     var mensajeColor = document.getElementById('indicador-de-color-mensaje');
     mensajeColor.textContent = "Pincel Color: " + colorActual;
 
-    //pintoGrilla = document.getElementById('grilla-pixeles');
-    //pintoGrilla.addEventListener('click',pintaCuadrado);
+    //Pinto la grilla de pixeles de los colores de la rueda
+    pintoGrilla = document.getElementById('grilla-pixeles');
+    pintoGrilla.addEventListener('click',pintaCuadrado);
 
-    pintoSeguido = document.getElementById('grilla-pixeles');
-    pintoSeguido.addEventListener('onmousedown',pintaCuadradoSeguido);
-    
-    
-    
-   // function pintaCuadrado(e){
-   //   e.target.style.backgroundColor = colorActual;
-   // }
-
-    function pintaCuadradoSeguido(f){
-        f.target.style.backgroundColor = colorActual;
+    function pintaCuadrado(e){
+      e.target.style.backgroundColor = colorActual;
     }
 
-    
-  })
-);
+    //Intento de funcion para pintar los cuadros en forma seguida
+
+    $('#grilla-pixeles').mousedown(function(n){
+      n.style.backgroundColor = colorActual;
+    });
+}));
+
+//Intento de funcion para pintar los cuadros en forma seguida
+
+/*
+pintoSeguido = document.getElementById('grilla-pixeles');
+pintoSeguido.addEventListener('mousedown',pintaCuadradoSeguido);
+  
+function pintaCuadradoSeguido(f){
+    f.target.style.backgroundColor = colorActual;
+}
+*/
+
+// Borrar la matriz
+$('#borrar').click(function() {
+  var $cuadrados = $("#grilla-pixeles div");
+  for (var i = 0; i < $cuadrados.length; i++) {
+    $cuadrados[i].style.backgroundColor = 'white';
+  }
+});
+
+//cargar las imagenes en la matriz de los super heroes
+$('#batman').click(function() {
+  cargarSuperheroe(batman);
+});
+
+$('#wonder').click(function() {
+  cargarSuperheroe(wonder);
+});
+
+$('#flash').click(function() {
+  cargarSuperheroe(flash);
+});
+
+$('#invisible').click(function() {
+  cargarSuperheroe(invisible);
+});
+
+//Guarda la pantalla
+$('#guardar').click(function(){
+  guardarPixelArt();
+});

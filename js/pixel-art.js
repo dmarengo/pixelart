@@ -55,24 +55,28 @@ colorPersonalizado.addEventListener('change',
     function pintaCuadrado(e){
       e.target.style.backgroundColor = colorActual;
     }
-
+    
     //Intento de funcion para pintar los cuadros en forma seguida
 
-    $('#grilla-pixeles').mousedown(function(n){
-      n.style.backgroundColor = colorActual;
+    /*
+    pintoSeguido = document.getElementById('grilla-pixeles');
+    pintoSeguido.addEventListener('mousedown',pintaCuadradoSeguido);
+      
+    function pintaCuadradoSeguido(f){
+        f.target.style.backgroundColor = colorActual;
+    }
+    */
+
+    //2do Intento de funcion para pintar los cuadros en forma seguida
+    /*
+    $('#grilla-pixeles').mousedown(function(){
+      style.backgroundColor = colorActual;
     });
+    */
+
 }));
 
-//Intento de funcion para pintar los cuadros en forma seguida
 
-/*
-pintoSeguido = document.getElementById('grilla-pixeles');
-pintoSeguido.addEventListener('mousedown',pintaCuadradoSeguido);
-  
-function pintaCuadradoSeguido(f){
-    f.target.style.backgroundColor = colorActual;
-}
-*/
 
 // Borrar la matriz
 $('#borrar').click(function() {

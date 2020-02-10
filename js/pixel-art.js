@@ -20,13 +20,24 @@ var nombreColores = ['White', 'LightYellow',
   'DimGray', 'LightSlateGray', 'DarkSlateGray', 'Black'
 ];
 
-for (var i=0; i<nombreColores.length; i++){
-  nuevoDiv = document.createElement('div');
-  nuevoDiv.style.backgroundColor = nombreColores[i];
-  colorPaleta = document.createElement('class');
-  paleta.appendChild(nuevoDiv);
-}
+// guardo en variables el ID paleta y grillaPixeles
+var paleta = document.getElementById('paleta');
+var grillaPixeles = document.getElementById('grilla-pixeles');
+var numeroDePixeles = 1750; 
 
+
+//Pinto la matriz de los colores de colorPaleta
+function matrizColores(){
+  for (var i = 0; i < nombreColores.length; i++) { 
+    var color = document.createElement('div'); 
+    color.className = ('color-paleta'); 
+    color.style.backgroundColor= nombreColores[i];
+    paleta.appendChild(color); 
+    }
+}
+matrizColores();
+
+//Creo la matriz de cuadros donde dibujar
 var cuadrados = document.getElementById('grilla-pixeles');
 for (var j=0; j<1750; j++){
   var nuevoCuadro = document.createElement('div');
@@ -37,46 +48,49 @@ for (var j=0; j<1750; j++){
 // Es decir, el que se elige con la rueda de color.
 var colorPersonalizado = document.getElementById('color-personalizado');
 
+// Completar para que cambie el indicador-de-color al colorActual
+var indicador = document.getElementById("indicador-de-color");
+paleta.addEventListener("click", cambiaColor); 
+
+function cambiaColor(e){
+  indicador.style.backgroundColor = e.target.style.backgroundColor;
+  var mensajeColor = document.getElementById('indicador-de-color-mensaje');
+  mensajeColor.textContent = "Pincel Color: " + indicador.style.backgroundColor;
+}
+
+// Pintar la matriz a medida que hago un click y muestra el nombre del color
+grillaPixeles.addEventListener("click", pintarMatriz); 
+function pintarMatriz (f){
+ f.target.style.backgroundColor = indicador.style.backgroundColor;
+}
+
+// Con esto pinto la Matriz a medida que mantengo apretado el mouse
+var clickCursor = false; 
+
+grillaPixeles.addEventListener("mousedown", pintoMatriz);
+grillaPixeles.addEventListener("mouseup", sueltoPintar);
+grillaPixeles.addEventListener("mouseover", pintoMoviendo);
+
+function pintoMatriz(g){
+  clickCursor=true;
+}
+
+function sueltoPintar(g) {
+  clickCursor = false;
+}
+
+function pintoMoviendo(g) {
+  if (clickCursor) {
+    pintarMatriz(g);
+  } 
+}
+
 colorPersonalizado.addEventListener('change', 
   (function() {
     // Se guarda el color de la rueda en colorActual
-    colorActual = colorPersonalizado.value;
-    
-    // Completar para que cambie el indicador-de-color al colorActual
-    var colorido = document.getElementById('indicador-de-color');
-    colorido.style.backgroundColor = colorActual;
-    var mensajeColor = document.getElementById('indicador-de-color-mensaje');
-    mensajeColor.textContent = "Pincel Color: " + colorActual;
-
-    //Pinto la grilla de pixeles de los colores de la rueda
-    pintoGrilla = document.getElementById('grilla-pixeles');
-    pintoGrilla.addEventListener('click',pintaCuadrado);
-
-    function pintaCuadrado(e){
-      e.target.style.backgroundColor = colorActual;
-    }
-    
-    //Intento de funcion para pintar los cuadros en forma seguida
-
-    /*
-    pintoSeguido = document.getElementById('grilla-pixeles');
-    pintoSeguido.addEventListener('mousedown',pintaCuadradoSeguido);
-      
-    function pintaCuadradoSeguido(f){
-        f.target.style.backgroundColor = colorActual;
-    }
-    */
-
-    //2do Intento de funcion para pintar los cuadros en forma seguida
-    /*
-    $('#grilla-pixeles').mousedown(function(){
-      style.backgroundColor = colorActual;
-    });
-    */
-
+    var colorActual = colorPersonalizado.value;
+    indicador.style.backgroundColor = colorActual; // cambia el indicador al colorActual
 }));
-
-
 
 // Borrar la matriz
 $('#borrar').click(function() {
@@ -107,3 +121,5 @@ $('#invisible').click(function() {
 $('#guardar').click(function(){
   guardarPixelArt();
 });
+
+
